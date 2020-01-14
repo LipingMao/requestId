@@ -5,24 +5,29 @@ import (
 	"github.com/google/uuid"
 )
 
-const TrackingID = "Tracking-Id"
+const DefaultHeader = "Tracking-Id"
 
 func NewTrackingId() string {
 	return uuid.New().String()
 }
 
-// Gin Middleware
+// Gin Middleware with default header
 func TrackingId() gin.HandlerFunc {
+	return TrackingIdWithCustomizedHeader(DefaultHeader)
+}
+
+// Gin Middleware with cusomized header
+func TrackingIdWithCustomizedHeader(head string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		tId := c.GetHeader(TrackingID)
+		tId := c.GetHeader(head)
 		// Generate TrackingID is not exist
 		if tId == "" {
 			tId = NewTrackingId()
-			c.Header(TrackingID, tId)
+			c.Header(head, tId)
 		}
 
 		// Set in Context
-		c.Set(TrackingID, tId)
+		c.Set(head, tId)
 		c.Next()
 	}
 }
