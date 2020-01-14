@@ -20,7 +20,7 @@ func TrackingId() gin.HandlerFunc {
 func TrackingIdWithCustomizedHeader(head string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tId := c.GetHeader(head)
-		// Generate TrackingID is not exist
+		// Generate TrackingID if not exist
 		if tId == "" {
 			tId = NewTrackingId()
 			c.Header(head, tId)
