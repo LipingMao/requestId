@@ -1,4 +1,4 @@
-module trackingId
+module github.com/LipingMao/trackingId
 
 go 1.13
 
